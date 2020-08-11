@@ -8,11 +8,19 @@
     "start": "ts-node-dev --transpile-only --respawn --ignore-watch node_modules src/server.ts"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "@types/bcrypt": "^3.0.0",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/mongoose": "^5.7.36",
+    "bcrypt": "^5.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.28",
+    "uuidv4": "^6.2.2"
   },
   "devDependencies": {
     "@types/express": "^4.17.7",
     "ts-node-dev": "^1.0.0-pre.56",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^3.9.7"
   }
 }
