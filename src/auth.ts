@@ -1,14 +1,15 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 
 import {Db} from "./db/db";
-import hashToken from "./config/auth.json"; 
 import { IUserSchema } from "./db/models/user";
+import tokens from "./token";
+import { requestAuth } from "./interfaces/IAuth";
 
 export async function auth(request:Request, response:Response):Promise<Response>{
 
     const {name, email, password} = request.body;
+    const headerAuth:string | undefined = request.headers.authorization;
 
     const mongoDb = new Db();
     const user:IUserSchema | null = await mongoDb.selectUserByEmail(email);
@@ -19,18 +20,12 @@ export async function auth(request:Request, response:Response):Promise<Response>
     if(!await bcrypt.compare(password, user.password)){
         return response.status(401).send(false);
     }
-
-    const token = jwt.sign({email}, hashToken.secret, {
-        expiresIn: 86400
-    });
     
-    
-    // const user = await mongoDb.insertUser({name, email, password});
-    /*jwt.verify(token, hashToken.secret, (err, decoded) =>{
-        console.log(decoded);
-    });*/
+    const token = tokens.sign(email);
+   
     return response.status(200).send(
         {token}
     );
     
+    //request.email
 }

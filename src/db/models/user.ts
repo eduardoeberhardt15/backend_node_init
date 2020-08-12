@@ -6,6 +6,7 @@ export interface IUserSchema extends Document {
     email: string;
     name: string;
     password: string;
+    getName():string;
   }
   
 
@@ -30,6 +31,9 @@ const Userschema:Schema = new mongoose.Schema({
         type:Date,
         default: Date.now
     },
+    
+},{
+    timestamps:true
 });
 
 Userschema.pre<IUserSchema>("save", async function(next){ 
@@ -38,6 +42,10 @@ Userschema.pre<IUserSchema>("save", async function(next){
 
     next();
 });
+
+Userschema.methods.getName = function():string{
+    return this.name;
+}
 
 const User = mongoose.model<IUserSchema>("user", Userschema, "user");
 

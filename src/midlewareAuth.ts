@@ -1,7 +1,7 @@
 
 import {Request, Response, NextFunction, RequestHandler} from "express";
 import tokens from "./token";
-import { requestAuth, decode } from "./interfaces/IAuth";
+import { decode } from "./interfaces/IAuth";
 
 
 export const midlewareAuth:RequestHandler = (request:any, response:Response, next:NextFunction)=>{

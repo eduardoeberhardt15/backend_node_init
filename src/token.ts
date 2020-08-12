@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import hashToken from "./config/auth.json"; 
-
+import { decode } from "./interfaces/IAuth";
 
 class Token{
 
@@ -13,12 +13,16 @@ class Token{
         return token;
     }
 
-    public validation(token:string):Object{
+    public validation(token:string | undefined):Object | undefined{ 
 
-        let objReturn={};
+        let objReturn;
 
+        if(token)
         jwt.verify(token, hashToken.secret, (err, decoded) =>{
-           if(decoded) objReturn=decoded;
+           if(decoded){
+               const resp:decode = decoded;
+               objReturn=resp.unique;
+           } 
            
         });
 
